@@ -1,4 +1,3 @@
-
 ## All
 
 ### Do not use using directives
@@ -16,27 +15,8 @@ are dangerous enough to be banned by the Google style guide.
 
 * https://abseil.io/tips/153
 
-### Use std::{mutex,recursive_mutex,lock_guard} instead of yarp::os::{Mutex,RecursiveMutex,LockGuard,RecursiveLockGuard}
 
-*Rationale*: There is no real reason to prefer YARP classes compared to the
-standard library ones.
-
-
-## **YL** Libraries
-
-### YL1: All headers containing public classes must be included at least once
-
-All headers containing public virtual classes must be included at least once in
-one `.cpp` file that belongs to the library, even if everything is inline.
-
-This does not apply to template classes.
-
-*Rationale*: When the class is imported, the linker looks for the vtable in the
-library, but if the file is not included when creating the library, the vtable
-is never created.
-
-
-### YL2: Assert should not contain logic
+### Assert should not contain logic
 
 Do not insert code that should always be executed.
 
@@ -59,7 +39,23 @@ yAssert(p.open("..."));
 executed.
 
 
-### YL3: Asserts should not be used for error handling
+## **YL** Libraries
+
+### YL1: All headers containing public classes must be included at least once
+
+All headers containing public virtual classes must be included at least once in
+one `.cpp` file that belongs to the library, even if everything is inline.
+
+This does not apply to template classes.
+
+*Rationale*: When the class is imported, the linker looks for the vtable in the
+library, but if the file is not included when creating the library, the vtable
+is never created.
+
+
+## **EH** Error Handling
+
+### EH1: Asserts should not be used for error handling
 
 Do not use `assert()`, `yAssert()`, etc. for error handling.
 
@@ -67,7 +63,7 @@ Do not use `assert()`, `yAssert()`, etc. for error handling.
 all when something goes wrong.
 
 
-### YL4: Termination of the execution should not be used for error handling
+### EH2: Termination of the execution should not be used for error handling
 
 Do not use `exit()`, `abort()`, `terminate`, `yFatal()`, etc. for error
 handling.
