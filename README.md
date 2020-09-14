@@ -157,13 +157,3 @@ previous will ensure that the data owned by the `BufferedPort` will stay in
 a consistent (and safe) state, will avoid re-allocating memory, and will avoid
 useless copies.
 
-
--------------------------------------------------------------------------------
-
-
-### _____WIP_____ Naming
-
-At the moment, most plugins use `yarp_<plugin_name>.so` as library name.
-I would like to change them to use an automatic naming
-
-`<plugin_type>_<package_name>_<plugin_name>.so`
