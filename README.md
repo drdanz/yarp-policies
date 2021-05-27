@@ -132,12 +132,34 @@ allocating useless memory that is not used.
 *Rationale*: The `yarp::dev` namespace is reserved for classes in the `YARP_dev`
 library.
 
+
 ### YDD4: Devices methods should not be `virtual`, but only `override`, unless there is a good reason
 
 *Rationale*: Devices classes derive from interfaces, but they are never derived.
 
 There are a few exception for 2 device sharing the same implementation or some
 base class. In this case `virtual` methods are allowed.
+
+
+### YDD5: Getters implementation should not try to force a frequency
+
+*Rationale*: Interfaces can be used by more than one attached device at the same
+time. Using delays to force a specific frequency means that, if some kind of
+synchronization mechanism (mutex, condition variables, etc) is used, while one
+caller is waiting for the frequency, the others will be stuck trying to access
+the critical section.
+This means that the frequency is actually divided by the number of callers.
+
+Moreover, for "pull" methods, the frequency should be imposed by the caller, and
+the getter should just return the latest data available, as fast as possible.
+
+### YDD6: Getters implementation should not ensure that data is read once and only once
+
+*Rationale*: Interfaces can be used by more than one attached device at the same
+time. Trying to return the image once and only once means that each caller will
+alternately recieve the data.
+This means that callers do not receive all data, that is actually divided by the
+number of callers.
 
 
 ## **YNW**: Network Wrapper Client/Server
