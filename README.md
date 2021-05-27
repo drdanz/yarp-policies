@@ -137,6 +137,42 @@ There are a few exception for 2 device sharing the same implementation or some
 base class. In this case `virtual` methods are allowed.
 
 
+## **YNW**: Network Wrapper Client/Server
+
+### YNW1: NWC and NWS should not contain any logic.
+
+*Rationale*: Logic inside NWS/NWC implies that:
+  * there is a difference in using the device locally or using an NWC connected
+    to an NWS;
+  * if there are NWS for different middleware, each of them should implement the
+    same logic.
+
+
+### YNW2: NWC and NWS naming convention.
+
+The name of the device consists of 3 parts, separated by a `_` character:
+
+* A "significative" common part shared by both devices (camelCase, with the
+  first word lowercase)
+* `nwc` or `nws`.
+* The name of the middleware (lowercase) (`yarp`, `ros`, etc.)
+
+For example:
+
+| NWS                             | NWC                             |
+|---------------------------------|---------------------------------|
+| `controlBoard_nws_yarp`         | `controlBoard_nwc_yarp`         |
+| `multipleAnalogSensor_nws_yarp` | `multipleAnalogSensor_nwc_yarp` |
+
+
+### YNW3: NWC and NWS protocol should be defined using thrift.
+
+*Rationale*:  Historically, the protocol used in YARP NWC and NWS was defined
+inside the code.
+This requires that the server and client are kept in sync manually, using
+parsing of positional arguments inside bottles, makes the code hard to read, and
+less maintainable.
+
 
 ## **YBP**: YARP `BufferedPort`
 
@@ -152,4 +188,3 @@ used again. Copying the data is usually expansive. Swapping the data with the
 previous will ensure that the data owned by the `BufferedPort` will stay in
 a consistent (and safe) state, will avoid re-allocating memory, and will avoid
 useless copies.
-
