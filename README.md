@@ -85,6 +85,9 @@ On windows there is a risk that the memory allocated inside the plugin is
 deleted after the dll has already been unloaded, therefore it might cause
 crashes.
 
+This is also valid for arguments passed as non-const pointers or references to
+the methods.
+
 
 ## **YC**: YARP carriers
 
